@@ -8,14 +8,17 @@ permalink:        pretty
 # Setup
 title:            Code
 tagline:          'Writings by Toby Smith'
-description:      'Thoughts on code, covering a variety of interests. Made by <a href="https://twitter.com/tismith" target="_blank">@tismith</a>.'
-url:              http://code.tismith.id.au
+description:      'Thoughts on programming and technology. Made by <a href="mailto:toby@tismith.id.au">Toby Smith</a>.'
+url:              http://tismith.id.au
 
 author:
   name:           'Toby Smith'
-  url:            https://twitter.com/tismith
+  email:           toby@tismith.id.au
+  twitter:         https://twitter.com/tismith
+  linkedin:        http://au.linkedin.com/in/tismith22
+  github:          https://github.com/tismith
 
 paginate:         5
 
 github:
-  repo:           https://github.com/tismith
+  repo:           https://github.com/tismith/tismith.github.io
