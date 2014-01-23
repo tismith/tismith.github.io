@@ -22,3 +22,6 @@ paginate:         5
 
 github:
   repo:           https://github.com/tismith/tismith.github.io
+
+disqus:
+  shortname:      codetismith
