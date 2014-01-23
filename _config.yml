@@ -8,7 +8,7 @@ permalink:        /:categories/:year/:title.html
 # Setup
 title:            Code
 tagline:          'Writings by Toby Smith'
-description:      'Thoughts on programming and technology. Made by <a href="mailto:toby@tismith.id.au">Toby Smith</a>.'
+description:      'By <a href="mailto:toby@tismith.id.au">Toby Smith</a>.'
 url:              http://tismith.github.io
 timezone:         Australia/Brisbane
 
