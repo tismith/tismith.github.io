@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
 
 If you squint, it looks like templates can be used as functions, types as function arguments and fields (or typedefs) in the templated structure as your result.
 
-With this in mind, think of the following Haskell code snippet:
+With this in mind, think of how similar the previous code example looks when compared with the following Haskell code snippet:
 
 {% highlight haskell linenos %}
 module Main where
@@ -59,6 +59,8 @@ fib 2 = 1
 fib n = fib (n-1) + fib (n-2)
 main = putStrLn $ "Fib 5:" ++ (show $ fib 5)
 {% endhighlight %}
+
+Neat! They seem to line up fairly closely when looking at it this way. 
 
 The key to writing recursive templates like this is to use template specialisation as your base case to terminate the recursion. It's like pattern matching in Haskell to determine which function definition to use. 
 
