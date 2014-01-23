@@ -3,13 +3,14 @@ markdown:         redcarpet
 pygments:         true
 
 # Permalinks
-permalink:        pretty
+permalink:        /:categories/:year/:title.html
 
 # Setup
 title:            Code
 tagline:          'Writings by Toby Smith'
 description:      'Thoughts on programming and technology. Made by <a href="mailto:toby@tismith.id.au">Toby Smith</a>.'
 url:              http://tismith.id.au
+timezone:         Australia/Brisbane
 
 author:
   name:           'Toby Smith'
@@ -25,3 +26,5 @@ github:
 
 disqus:
   shortname:      codetismith
+
+exclude:          [Gemfile, Gemfile.lock, Makefile, README.md]
