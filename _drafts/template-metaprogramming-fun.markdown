@@ -1,6 +1,7 @@
 ---
 layout: post
-title:  "Template metaprogramming fun"
+title:  "Fun with C++ template metaprogramming"
+tags: c++ 
 ---
 
 This is a basic fibonacci generator that runs at compile time.

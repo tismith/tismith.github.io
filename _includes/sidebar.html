@@ -26,9 +26,15 @@
         {% endif %}
       {% endfor %}
 
+      {% if site.author.linkedin %}
       <li class="sidebar-nav-item"><a href="{{ site.author.linkedin }}">LinkedIn</a></li>
+      {% endif %}
+      {% if site.author.twitter %}
       <li class="sidebar-nav-item"><a href="{{ site.author.twitter }}">Twitter</a></li>
+      {% endif %}
+      {% if site.author.github %}
       <li class="sidebar-nav-item"><a href="{{ site.author.github }}">GitHub</a></li>
+      {% endif %}
     </ul>
 
     <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>
