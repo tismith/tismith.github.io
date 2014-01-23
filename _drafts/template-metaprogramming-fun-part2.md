@@ -1,10 +1,12 @@
 ---
 layout: post
-title:  "Fun with C++ template metaprogramming"
+title:  "Fun with C++ template metaprogramming, part II"
 tags: c++ 
 ---
 
-[Template metaprogramming][wiki] in C++ is neat!
+In [part I]({% post_url 2014-01-24-template-metaprogramming-fun %}) we discussed some basic constructs that could be built using C++ template metaprogramming. 
+
+Template metaprogramming in C++ is neat!
 
 It lets you write programs that you can get the compiler to execute at compile time. Here's a basic example showing how to get the compiler to calculate the greatest common divisor of two numbers:
 
@@ -24,7 +26,7 @@ int main(int argc, char **argv) {
 }
 {% endhighlight %}
 
-At first glance, this isn't anything too interesting, until you realise the the value `GCD<25, 60>` on line 12 is replaced with the calculated result and ends up as a `static const int` with a value of 25.
+At first glance, this isn't anything too interesting, until you realise the the value "GCD<25, 60>" on line 12 is replaced with the calculated result and ends up as a "static const int" with a value of 25.
 
 Moving on, this is a basic fibonacci generator that runs at compile time.
 
@@ -125,5 +127,4 @@ In the next post in this series, I'll extend these ideas into building lists wit
 
 Full code for the above is available on [GitHub][tmp-play]
 
-[wiki]: http://wikipedia.org/wiki/Template_metaprogramming
 [tmp-play]: {{ site.author.github }}/tmp-play
