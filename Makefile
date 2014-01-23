@@ -6,3 +6,6 @@ all:
 
 install:
 	bundle install
+
+update:
+	bundle update
