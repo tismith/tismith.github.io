@@ -9,6 +9,7 @@ permalink:        /:categories/:year/:title.html
 title:            Code
 tagline:          'Writings by Toby Smith'
 description:      'By <a href="mailto:toby@tismith.id.au">Toby Smith</a>.'
+rssdescription:   'Code by Toby Smith'
 url:              http://tismith.id.au
 timezone:         Australia/Brisbane
 
