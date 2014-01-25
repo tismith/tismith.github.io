@@ -28,4 +28,8 @@ github:
 disqus:
   shortname:      codetismith
 
+google_analytics:
+  id:             'UA-47457908-1'
+  name:           'tismith.id.au'
+
 exclude:          [Gemfile, Gemfile.lock, Makefile, README.md]
