@@ -9,3 +9,6 @@ install:
 
 update:
 	bundle update
+
+clean:
+	-rm -rf _site
