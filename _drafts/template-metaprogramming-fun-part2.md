@@ -4,127 +4,88 @@ title:  "Fun with C++ template metaprogramming, part II"
 tags: c++ 
 ---
 
-In [part I]({% post_url 2014-01-24-template-metaprogramming-fun %}) we discussed some basic constructs that could be built using C++ template metaprogramming. 
+In [part I][part I] we discussed some basic constructs that could be built using C++ template metaprogramming. 
 
-Template metaprogramming in C++ is neat!
+This time, we're going to build up to doing more complicated things - building lists and operating on them.
 
-It lets you write programs that you can get the compiler to execute at compile time. Here's a basic example showing how to get the compiler to calculate the greatest common divisor of two numbers:
+How can we build a list in a C++ template? I decided to borrow a common idea from Lisp, a [cons list](http://wikipedia.org/wiki/Cons)
+
+The idea is to essentially build a recursive structure so that each element of the list contains two values - the value at that point in the list, and the remaining list. Each list node holds a `head` and a `tail`, (or in Lisp jargon, `car` and `cdr`). In pseudo-code:
+
+```
+list a (list b (list c (list d ...)))
+```
+
+But then the question arises of how to terminate the list. The best way to do this is with some terminal marker or sentinel to indicate the last element, or the empty list. In Lisp, this could be `nil`, or in Haskell a special constructor for the empty list `[]`. Again, in pseudo code, this is something like:
+
+```
+list a (list b (list c (list d (emptylist))))
+```
+
+Then to transate this to a C++ template, we can do the following:
+
+{% highlight cpp linenos %}
+// list.hpp
+struct EmptyList {};
+
+template< int a, typename L > struct LIST {
+	static const int HEAD = a;
+	typedef L TAIL;
+};
+
+typedef LIST<'a', LIST<'b', LIST<'c', LIST<'d', EmptyList> > > > myList;
+{% endhighlight %}
+
+So here we have a _type_ that contains a list of `int`. When we build the list, `myList`, we're building a type that _represents_ the list `[a, b, c, d]`. Not a runtime series of `structs`, but a type that we can operate on at compile. For example, pulling the `HEAD` of the list out can be achieved with:
 
 {% highlight cpp linenos %}
 #include <iostream>
-
-template< int a, int b > struct GCD {
-	static const int RESULT = GCD< b, a % b >::RESULT;
-};
-
-template< int a > struct GCD< a, 0 > {
-	static const int RESULT = a;
-};
-
+#include "list.hpp"
 int main(int argc, char **argv) {
-    std::cout << "GCD (25,50) == " << GCD<25, 50>::RESULT << std::endl;
+	std::cout << "head = " << myList::HEAD << std::endl;
 }
 {% endhighlight %}
 
-At first glance, this isn't anything too interesting, until you realise the the value "GCD<25, 60>" on line 12 is replaced with the calculated result and ends up as a "static const int" with a value of 25.
+Remember in [part I][part I], we built _functions_ out of templates whose input were types. Now that we have a list in a type, we can write functions that operate on it, at compile.
 
-Moving on, this is a basic fibonacci generator that runs at compile time.
-
+To run a function over the list, say to calculate the sum:
 {% highlight cpp linenos %}
-#include <iostream>
+template< class L>
+struct SUM {
+        static const int RESULT = 0;
+}; 
 
-template< int i > struct FIB {
-    static const int RESULT = FIB< i - 1 >::RESULT + FIB< i - 2 >::RESULT;
+//include all the template parameters that are used here for 
+//a template specialisation
+template< int a, class TAIL>
+struct SUM< LIST< a, TAIL> > { 
+        static const int RESULT =  a + SUM<TAIL>::RESULT;
 };
 
-template< > struct FIB< 1 > {
-    static const int RESULT = 1;
-};
-
-template< > struct FIB< 2 > {
-    static const int RESULT = 1;
-};
-
-int main(int argc, char **argv) {
-    std::cout << "Fib 5:" << FIB<5>::RESULT << std::endl;
-}
+//And you can pull the sum out with SUM< myList >::RESULT
 {% endhighlight %}
 
-If you squint, it looks like templates can be used as functions, types as function arguments and fields (or typedefs) in the templated structure as your result.
+Note again how I've used the pattern matching in template specialisation to define the different implementations for the recursive case and the base case in the `SUM` definitions.
 
-With this in mind, think of the following Haskell code snippet:
-
-{% highlight haskell linenos %}
-module Main where
-fib 1 = 1
-fib 2 = 1
-fib n = fib (n-1) + fib (n-2)
-main = putStrLn $ "Fib 5:" ++ (show $ fib 5)
-{% endhighlight %}
-
-The key to writing recursive templates like this is to use template specialisation as your base case to terminate the recursion. It's like pattern matching in Haskell to determine which function definition to use. 
-
-Normally, you'd write the templates in a separate C++ header and then include them into the main program, so I'll do that in the following examples.
-
-Here's a definition for an IF function in C++ templates:
-
+For something more interesting, how about map-reduce!
 {% highlight cpp linenos %}
-//conditional.hpp
-#ifndef _CONDITIONAL_H
-#define _CONDITIONAL_H
-
-template< bool CONDITION, class THEN, class ELSE > struct IF {};
-
-template<class THEN, class ELSE> struct IF< false, THEN, ELSE > {
-	typedef ELSE TEST;
+// map reduce over lists
+template< class L, template <int> class F , template <int, int> class R, int BASE>
+struct MAP_REDUCE {
+    static const int RESULT = BASE;
 };
 
-template<class THEN, class ELSE> struct IF< true, THEN, ELSE > {
-	typedef THEN TEST;
+template< int a, class TAIL, template <int> class F, template <int, int> class R , int BASE>
+struct MAP_REDUCE< LIST< a, TAIL>, F , R, BASE> {
+    static const int RESULT = R< F< a >::VALUE, MAP_REDUCE< TAIL, F, R, BASE >::RESULT >::VALUE;
 };
-
-#endif
 {% endhighlight %}
 
-Here, we've built a template with two specialisations, one for the IF clause and one for the ELSE clause. We've used typedefs to pick out the supplied clauses from the template arguments to determine the result.
+Here, `MAP_REDUCE` is a function (_template_) that takes a `LIST`, a unary function `F` (again, a template) to map over the list and a binary function `R` (also a template) to reduce the list to a single value (e.g. addition or minimum).
 
-{% highlight cpp linenos %}
-//conditional.cpp
-#include <iostream>
-#include "conditional.hpp"
+There are toy examples showing map reduce in action (such as summing the squares of a list, finding the minimum) in the git repository at [tmp-play].
 
-struct A {
-    static const int RESULT = 1;
-};
-
-struct B {
-    static const int RESULT = 0;
-};
-
-struct A1 {
-    static inline void EXEC(void) {
-        std::cout << "TRUE!";
-    }
-};
-
-struct B1 {
-    static inline void EXEC(void) {
-        std::cout << "FALSE!";
-    }
-};
-
-int main(int argc, char **argv) {
-    std::cout << "true = " << IF<true, A, B>::TEST::RESULT << std::endl;
-    std::cout << "true = " << IF<false, A, B>::TEST::RESULT << std::endl;
-
-    std::cout << "true = ";
-    IF<true, A1, B1>::TEST::EXEC();
-    std::cout << std::endl;
-}
-{% endhighlight %}
-
-In the next post in this series, I'll extend these ideas into building lists with templates, and then doing interesting operations (map, reduce and sort) on them, all at compile time.
-
-Full code for the above is available on [GitHub][tmp-play]
+In the next section, I'll be talking about more advanced operations, building up to what I originally set out to do - sort a list at compile time!
 
 [tmp-play]: {{ site.author.github }}/tmp-play
+[part I]: {% post_url 2014-01-24-template-metaprogramming-fun %}
