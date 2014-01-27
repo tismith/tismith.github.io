@@ -4,9 +4,7 @@ title:  "Fun with C++ template metaprogramming, part II"
 tags: c++ 
 ---
 
-In [part I][part I] we discussed some basic constructs that could be built using C++ template metaprogramming. 
-
-This time, we're going to build up to doing more complicated things - building lists and operating on them.
+In [part I][part I] we discussed some basic constructs that could be built using C++ template metaprogramming. This time, we're going to build up to doing more complicated things - building lists and operating on them.
 
 How can we build a list in a C++ template? I decided to borrow a common idea from Lisp, a [cons list](http://wikipedia.org/wiki/Cons)
 
