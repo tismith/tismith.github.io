@@ -18,8 +18,7 @@ A listing of all the posts on this site, sorted by date.
 
     <span class="post-date">{{ post.date | date_to_string }}</span>
 
-    {{ post.excerpt }}
-    <a href="{{ post.url }}"> ... Read more ... </a> 
+    <p class="post-excerpt">{{ post.excerpt | strip_html }}&hellip; (<a href="{{ post.url }}">Read More</a>)</p>
 
     <div>
     <a href="{{ post.url }}#disqus_thread" data-disqus-identifier="{{ post.id }}"> {{ post.title }} </a>
