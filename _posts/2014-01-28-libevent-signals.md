@@ -48,7 +48,7 @@ All the signals that I was catching in my parent process were being blocked in m
 
 So, what was going on? Well, the way libevent manages to run it's signal callbacks in the main event loop, sometime after the actual signal was caught, is by not running the callback _directly_ from the signal handler. All the signal handler needs to do is to mark the callback event as active, and then exit. Then when the main libevent loop next runs it will see that the signal callback is active and execute it from the main context, not from an asynchronous signal handler context. 
 
-When the main libevent loop is running a callback, it uses `sigblock` to mask out the signals so the asynchronous handlers can't interrupt the callbacks. To start my children, I was calling `fork` and `exec` from libevent callbacks and so my child processes were inheriting their parent's block mask (signal block masks are inherited across a `fork` and aren't cleared by an `exec`). And so my child processes had their block masks set to be the mask of what was being caught by my parent process.
+When the main libevent loop is running a callback, it uses `sigprocmask(SIG_BLOCK...` to mask out the signals so the asynchronous handlers can't interrupt the callbacks. To start my children, I was calling `fork` and `exec` from libevent callbacks and so my child processes were inheriting their parent's block mask (signal block masks are inherited across a `fork` and aren't cleared by an `exec`). And so my child processes had their block masks set to be the mask of what was being caught by my parent process.
 
 To fix this, I added the following code after my call to `fork` but before my `exec`:
 {% highlight c linenos %}
