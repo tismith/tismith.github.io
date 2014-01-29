@@ -60,6 +60,8 @@ sigfillset(&sigs);
 sigprocmask(SIG_UNBLOCK, &sigs, 0);
 {% endhighlight %}
 
+This could also be run from a child atfork handler registered with `pthread_atfork`.
+
 This ensured that my child processes started life with a clean signal block mask, letting my arbitrary processes continue to catch and handle signals without needed modification.
 
 [libevent]: http://libevent.org
