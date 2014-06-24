@@ -29,3 +29,6 @@
                 <priority>0.8</priority>
         </url>{% endif %}{% endfor %}
 </urlset>
+{% comment %}
+vim: set ft=liquid:
+{% endcomment %}

@@ -26,3 +26,6 @@ layout: nil
  {% endfor %}
 
 </feed>
+{% comment %}
+vim: set ft=liquid:
+{% endcomment %}

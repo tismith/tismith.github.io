@@ -5,3 +5,6 @@ User-agent: *
 {% endif %}{% endfor %}{% if isset != true %}Disallow:
 {% endif %}
 Sitemap: {{ site.url }}/sitemap.xml
+{% comment %}
+vim: set ft=liquid:
+{% endcomment %}
