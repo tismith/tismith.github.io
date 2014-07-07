@@ -16,7 +16,7 @@ The challenge all takes place over email, mirroring the patch submission process
 
 There are a few other sites popping up around the challenge that are talking about it. There's a great article over at [Linux Weekly News][lwn] that covers another's experience with the challenge. 
 
-I've certainly learnt a lot from working through the challenge, and I'd think that most developers would learn something. It's a fun and enjoyable prohject to have ticking along in the background. Give it a go!
+I've certainly learnt a lot from working through the challenge, and I'd think that most developers would learn something. It's a fun and enjoyable project to have ticking along in the background. Give it a go!
 
 [eudyptula]: http://eudyptula-challenge.org
 [lwn]: http://lwn.net/Articles/599231/
