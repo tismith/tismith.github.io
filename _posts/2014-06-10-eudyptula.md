@@ -6,7 +6,7 @@ tags: linux
 
 Learning is always easier when you have a goal. If you've ever wanted to get started with Linux kernel development, but haven't had a clear goal in mind, give the [Eudyptula Challenge](eudyptula) a go. 
 
-I'm the 22nd person to have finished the [Eudyptula Challenge][eudyptula]. It's a series of (currently 20) challenges, increasing in difficulty, designed to introduce and educate the participant in the methods, techniques and code-base surrounding the Linux kernel and it's development. It's not a tutorial however, the challenges are posed, and it's upon the participant to investigate and learn enough to complete the challenge. As a result, public discussion of specific questions is discouraged. 
+I'm the 22nd person to have finished the [Eudyptula Challenge](eudyptula). It's a series of (currently 20) challenges, increasing in difficulty, designed to introduce and educate the participant in the methods, techniques and code-base surrounding the Linux kernel and it's development. It's not a tutorial however, the challenges are posed, and it's upon the participant to investigate and learn enough to complete the challenge. As a result, public discussion of specific questions is discouraged. 
 
 Subject matter ranges from building custom kernels, coding style modifications, patch submission, locking mechanisms, networking and file-systems. It's a good broad stroke introduction to developing in the kernel.
 
