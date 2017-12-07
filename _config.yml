@@ -1,6 +1,5 @@
 # Dependencies
 markdown:         kramdown
-pygments:         true
 
 # Permalinks
 permalink:        /:categories/:year/:title.html
