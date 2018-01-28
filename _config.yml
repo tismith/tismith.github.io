@@ -1,5 +1,6 @@
 # Dependencies
 markdown:         kramdown
+highlighter:      pygments
 
 # Permalinks
 permalink:        /:categories/:year/:title.html
@@ -32,3 +33,6 @@ google_analytics:
   name:           'tismith.id.au'
 
 exclude:          [Gemfile, Gemfile.lock, Makefile, README.md, vendor]
+
+plugins:
+                  - jekyll-paginate
