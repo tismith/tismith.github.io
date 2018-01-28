@@ -10,7 +10,7 @@ Recall from the previous sections that when working with template meta-programmi
 
 As a result, remember that that our lists are of the form:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // list.hpp
 struct EmptyList {};
 
@@ -29,7 +29,7 @@ Now to sort this list, we're going to use a [merge sort][merge sort]. The varian
 
 To write the first part, splitting the list into smaller parts, we'll need a `PAIR` data type so we can split a list in to two parts. It's tempting to create a struct with values for this, but remember, we want to allow the data type to hold arbitrary values from meta-programming, so it needs contain types (i.e. typedefs).
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 template <typename A, typename B> struct PAIR {
 	typedef A FST;
 	typedef B SND;
@@ -38,7 +38,7 @@ template <typename A, typename B> struct PAIR {
 
 Now're we're able to write the first part of the mergesort algorithm, the split routine.
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 template < class L > struct SPLIT {};
 
 template <> struct SPLIT <EmptyList> {
@@ -65,7 +65,7 @@ Note how we've used `private` typedefs to hold temporary values that are used to
 
 To write the second part, we'll need to be able to merge two sorted lists together to make a single sorted list. This will require a conditional, an `IF`.
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // conditional.hpp
 template< bool CONDITION, class THEN, class ELSE > struct IF {};
 
@@ -81,7 +81,7 @@ template<class THEN, class ELSE> struct IF< true, THEN, ELSE > {
 Here, we now have a `IF` template that we can use to generate conditionals. We've defined the general template at the top, and then in two 
 template specialisations we've defined the `ELSE` and `THEN` cases. To use it, we call it like so:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 #include "conditional.hpp"
 
 struct A {
@@ -98,7 +98,7 @@ int result = IF<true, A, B>::TEST::RESULT;
 
 We can now write our `MERGE` template.
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 //merge - take two sorted lists and return a sorted merged list -- needs an IF
 template < template <int, int> class P, class L1, class L2> struct MERGE {};
 
@@ -123,7 +123,7 @@ struct MERGE< P, LIST<A1, TAIL1>, LIST<A2, TAIL2> > {
 
 And finally, putting it all together, we can write a `SORT` that recurisively splits a list into smaller and smaller parts, and then merges them back together into a single sorted list.
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 template < template <int, int> class P, class L >
 struct SORT {
 private:

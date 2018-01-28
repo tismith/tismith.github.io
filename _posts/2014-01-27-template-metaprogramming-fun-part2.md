@@ -22,7 +22,7 @@ list a (list b (list c (list d (emptylist))))
 
 Then to transate this to a C++ template, we can do the following:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // list.hpp
 struct EmptyList {};
 
@@ -36,7 +36,7 @@ typedef LIST<'a', LIST<'b', LIST<'c', LIST<'d', EmptyList> > > > myList;
 
 So here we have a _type_ that contains a list of `int`. When we build the list, `myList`, we're building a type that _represents_ the list `[a, b, c, d]`. Not a runtime series of `structs`, but a type that we can operate on at compile. For example, pulling the `HEAD` of the list out can be achieved with:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 #include <iostream>
 #include "list.hpp"
 int main(int argc, char **argv) {
@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
 Remember in [part I][part I], we built _functions_ out of templates whose input were types. Now that we have a list in a type, we can write functions that operate on it, at compile.
 
 To run a function over the list, say to calculate the sum:
-{% highlight cpp linenos %}
+{% highlight cpp %}
 template< class L>
 struct SUM {
         static const int RESULT = 0;
@@ -66,7 +66,7 @@ struct SUM< LIST< a, TAIL> > {
 Note again how I've used the pattern matching in template specialisation to define the different implementations for the recursive case and the base case in the `SUM` definitions.
 
 For something more interesting, how about map-reduce!
-{% highlight cpp linenos %}
+{% highlight cpp %}
 // map reduce over lists
 template< class L, template <int> class F , template <int, int> class R, int BASE>
 struct MAP_REDUCE {
