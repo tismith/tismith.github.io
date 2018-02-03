@@ -20,7 +20,7 @@ It sets the vim variables `tabstop`, `shiftwidth` and `softtabstop` to ensure th
 behave consistently in display, when shift and when in insert mode. They're set in a buffer-local context
 (that's the `b:` prefix) to ensure they only affect the current buffer.
 
-{% highlight vim linenos %}
+{% highlight vim %}
 "map <F8> to toggle small/normal tabs
 noremap <F8> :call <SID>ToggleTabs()<CR>
 

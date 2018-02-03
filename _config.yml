@@ -1,5 +1,8 @@
 # Dependencies
 markdown:         kramdown
+highlighter:      rouge
+kramdown:
+  input:          GFM
 
 # Permalinks
 permalink:        /:categories/:year/:title.html
@@ -31,4 +34,7 @@ google_analytics:
   id:             'UA-47457908-1'
   name:           'tismith.id.au'
 
-exclude:          [Gemfile, Gemfile.lock, Makefile, README.md, vendor]
+exclude:          [Gemfile, Gemfile.lock, Makefile, README.md, vendor ]
+
+plugins:          [ jekyll-paginate ]
+

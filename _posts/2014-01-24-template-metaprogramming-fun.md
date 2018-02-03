@@ -8,7 +8,7 @@ tags: c++
 
 It lets you write programs that you can get the compiler to execute at compile time. Here's a basic example showing how to get the compiler to calculate the greatest common divisor of two numbers:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 #include <iostream>
 
 template< int a, int b > struct GCD {
@@ -24,11 +24,11 @@ int main(int argc, char **argv) {
 }
 {% endhighlight %}
 
-At first glance, this isn't anything too interesting, until you realise the the value `GCD<25, 60>` on line 12 is replaced with the calculated result and ends up as a `static const int` with a value of 25.
+At first glance, this isn't anything too interesting, until you realise the the value `GCD<25, 60>` is replaced with the calculated result and ends up as a `static const int` with a value of 25.
 
 Moving on, this is a basic fibonacci generator that runs at compile time.
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 #include <iostream>
 
 template< int i > struct FIB {
@@ -52,7 +52,7 @@ If you squint, it looks like templates can be used as functions, types as functi
 
 With this in mind, think of how similar the previous code example looks when compared with the following Haskell code snippet:
 
-{% highlight haskell linenos %}
+{% highlight haskell %}
 module Main where
 fib 1 = 1
 fib 2 = 1
@@ -68,7 +68,7 @@ Normally, you'd write the templates in a separate C++ header and then include th
 
 Here's a definition for an IF function in C++ templates:
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 //conditional.hpp
 #ifndef _CONDITIONAL_H
 #define _CONDITIONAL_H
@@ -88,7 +88,7 @@ template<class THEN, class ELSE> struct IF< true, THEN, ELSE > {
 
 Here, we've built a template with two specialisations, one for the IF clause and one for the ELSE clause. We've used typedefs to pick out the supplied clauses from the template arguments to determine the result.
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 //conditional.cpp
 #include <iostream>
 #include "conditional.hpp"

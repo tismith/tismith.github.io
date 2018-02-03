@@ -24,7 +24,7 @@ I fixed this by changing to a custom ``permalink`` setting of ``/:categories/:ye
 
 I'm not a ruby or web dev guy by trade, and so I knew I'd forget what the commands were to do a test build of the blog. However, I do know ``Make``. I've put the basic commands into a ``Makefile`` so they're easy to run (and I'll know where to look if I forget them).
 
-{% highlight make linenos %}
+{% highlight make %}
 run:
 	bundle exec jekyll serve --watch --drafts --trace
 
@@ -45,7 +45,7 @@ I wanted to use [Travis](http://travis-ci.org) for continuous integration to get
 This is pretty easy, it's just a matter of linking Travis to your GitHub profile, enabling your repo and then making the following changes to your repo.
 
 Add the following file to your site repo in a file called ``.travis.yml``:
-{% highlight yaml linenos %}
+{% highlight yaml %}
 language: ruby
 script: "bundle exec jekyll build"
 {% endhighlight %}
@@ -59,7 +59,7 @@ Post 0000-00-00-welcome-to-jekyll.markdown.erb does not have a valid date.
 ```
 
 To fix this add the following line to your ``_config.yml``:
-{% highlight yaml linenos %}
+{% highlight yaml %}
 exclude: [vendor]
 {% endhighlight %}
 
