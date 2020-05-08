@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/tismith
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://tismith.id.au
+  * I am tismith (https://keybase.io/tismith) on keybase.
+  * I have a public key ASB--a5FhL4qOvnoik7jhnFmeNByelvUW7NiHso4DpaIqgo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01207ef9ae4584be2a3af9e88a4ee386716678d0727a5bd45bb3621eca380e9688aa0a",
+      "host": "keybase.io",
+      "kid": "01207ef9ae4584be2a3af9e88a4ee386716678d0727a5bd45bb3621eca380e9688aa0a",
+      "uid": "019edf8707450b20fc6242e951438819",
+      "username": "tismith"
+    },
+    "merkle_root": {
+      "ctime": 1588918428,
+      "hash": "40ddd00a2f14c5d9d341460c61e65026d231fbb21c35a6cd61c45b4b9ed32cfaf1b9ef0b18b9abfd6cf3c7e8e88448378e5e8bde0c0c6508ac920ee9fc55d987",
+      "hash_meta": "ba2e1166ef6db34c93db7bdb0659d03fad6f0557ded52b07889c02c3f9aa47c9",
+      "seqno": 16208967
+    },
+    "service": {
+      "entropy": "shBV1C/0PmgsKhQJkQYGVT/c",
+      "hostname": "tismith.id.au",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.4.1"
+  },
+  "ctime": 1588918479,
+  "expire_in": 504576000,
+  "prev": "fd0c0c027f7f2849256f6811d90f32bcbad0d366c7964c6e7f53e0e85291f506",
+  "seqno": 13,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgfvmuRYS+Kjr56IpO44ZxZnjQcnpb1FuzYh7KOA6WiKoKp3BheWxvYWTESpcCDcQg/QwMAn9/KEklb2gR2Q8yvLrQ02bHlkxuf1Pg6FKR9QbEICR94wHulncLzlsbWa7wmUhwH0ON9kQcuQpu9bOB0bFpAgHCo3NpZ8RAhlV3+yFY+uEtu02s/7lFvxtSEQwTfNmyJkCo92htklYSPw6psvNIgXceIyc+vI7uHR+8oKSFcOTKhuchM8DfC6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIBg4sV16E5MRjb3jVGEg4M40c94mjaWwGvLwfMYcEwJwo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/tismith
+
+==================================================================
