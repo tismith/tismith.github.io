@@ -40,3 +40,27 @@ jobs:
 
       - name: Verify generated homepage
         run: test -s _site/index.html
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install browser test dependencies
+        run: |
+          npm install --prefix "$RUNNER_TEMP/browser-tests" --no-audit --no-fund playwright@1.63.0
+          "$RUNNER_TEMP/browser-tests/node_modules/.bin/playwright" install --with-deps chromium
+
+      - name: Test homepage rendering on desktop and mobile
+        env:
+          NODE_PATH: ${{ runner.temp }}/browser-tests/node_modules
+        run: node .github/tests/render.cjs
+
+      - name: Upload browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-screenshots
+          path: browser-test-results/
+          if-no-files-found: ignore
+          retention-days: 7
