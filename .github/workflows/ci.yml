@@ -1,0 +1,66 @@
+name: Jekyll CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    env:
+      JEKYLL_ENV: production
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      # Temporary compatibility baseline for github-pages 175 / Jekyll 3.6.
+      # Upgrade Ruby together with the legacy dependencies.
+      - name: Set up Ruby and install locked dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+          bundler-cache: true
+
+      - name: Build site
+        run: bundle exec jekyll build --trace
+
+      - name: Verify generated homepage
+        run: test -s _site/index.html
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install browser test dependencies
+        run: |
+          npm install --prefix "$RUNNER_TEMP/browser-tests" --no-audit --no-fund playwright@1.63.0
+          "$RUNNER_TEMP/browser-tests/node_modules/.bin/playwright" install --with-deps chromium
+
+      - name: Test homepage rendering on desktop and mobile
+        env:
+          NODE_PATH: ${{ runner.temp }}/browser-tests/node_modules
+        run: node .github/tests/render.cjs
+
+      - name: Upload browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-screenshots
+          path: browser-test-results/
+          if-no-files-found: ignore
+          retention-days: 7
