@@ -424,3 +424,11 @@ a.pagination-item:hover {
 iframe {
   max-width: 100%;
 }
+
+/* Links in content remain identifiable without relying on colour. */
+.content a {
+  text-decoration: underline;
+}
+.post-title a {
+  text-decoration: none;
+}

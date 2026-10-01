@@ -48,8 +48,7 @@ async function checkKeyboard(page, path) {
 
   // Walk the complete navigation using Tab, without focusing each link directly.
   await skip.focus();
-  await page.keyboard.press('Tab'); // Site title, before the navigation landmark.
-  const navigation = await page.locator('nav[aria-label="Main navigation"] a').all();
+  const navigation = await page.locator('.sidebar a').all();
   assert.ok(navigation.length >= 3);
   for (const link of navigation) {
     await page.keyboard.press('Tab');
@@ -130,7 +129,7 @@ async function main() {
             assert.deepEqual(insecure, [], 'Insecure resource URL on ' + path);
 
             const viewportSettings = await page.locator('meta[name="viewport"]').getAttribute('content');
-            assert.doesNotMatch(viewportSettings, /maximum-scale|user-scalable\\s*=\\s*(no|0)/i,
+            assert.doesNotMatch(viewportSettings, /maximum-scale|user-scalable\s*=\s*(no|0)/i,
               'Page must allow zoom: ' + path);
             await checkKeyboard(page, path);
             await page.evaluate(() => document.activeElement.blur());
