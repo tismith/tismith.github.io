@@ -79,6 +79,7 @@ async function main() {
     }
     assert.ok(pages.some(path => /^\/page\d+\/$/.test(path)), 'Pagination must be generated');
     const responses = new Map();
+    const failures = [];
     await mkdir('browser-test-results', { recursive: true });
     browser = await chromium.launch();
 
@@ -175,6 +176,9 @@ async function main() {
             }
             assert.deepEqual(errors, [], 'Rendering errors on ' + path);
             console.log('Renders successfully: ' + name + ' ' + path);
+          } catch (error) {
+            failures.push({ viewport: name, path, message: error.message });
+            console.error(error);
           } finally {
             const label = path === '/' ? 'homepage' : path.replace(/^\//, '').replace(/[^a-zA-Z0-9_-]/g, '-');
             await page.screenshot({ path: 'browser-test-results/' + label + '-' + name + '.png', fullPage: true });
@@ -185,6 +189,7 @@ async function main() {
         await context.close();
       }
     }
+    assert.deepEqual(failures, [], 'Site checks must pass for every page and viewport');
     console.log('Checked ' + pages.length + ' pages on desktop/mobile and ' + responses.size + ' internal targets');
   } finally {
     if (browser) await browser.close();

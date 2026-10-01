@@ -66,4 +66,7 @@
 .css .nt + .nt { color: #666; }
 
 .post > .highlight .lineno { color: #666; display:inline-block; padding: 0 5px; }
-.post > .highlight pre code { display: block; white-space: pre; overflow-x: auto; word-wrap: normal; }
+.post > .highlight pre code { display: block; white-space: pre; overflow-x: visible; word-wrap: normal; }
+
+/* Focusable pre elements let keyboard users scroll long code examples. */
+.highlight pre { overflow-x: auto; }

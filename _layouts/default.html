@@ -9,7 +9,7 @@
     {% include sidebar.html %}
 
     <main id="main-content" class="content container" tabindex="-1">
-      {{ content }}
+      {{ content | replace: '<pre', '<pre tabindex="0"' }}
     </main>
 
   </body>
