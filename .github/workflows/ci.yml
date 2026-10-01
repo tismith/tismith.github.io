@@ -46,10 +46,10 @@ jobs:
 
       - name: Install browser test dependencies
         run: |
-          npm install --prefix "$RUNNER_TEMP/browser-tests" --no-audit --no-fund playwright@1.63.0
+          npm install --prefix "$RUNNER_TEMP/browser-tests" --no-audit --no-fund playwright@1.63.0 axe-core@4.13.0
           "$RUNNER_TEMP/browser-tests/node_modules/.bin/playwright" install --with-deps chromium
 
-      - name: Test site rendering and internal links on desktop and mobile
+      - name: Test rendering, accessibility and internal links on desktop and mobile
         env:
           NODE_PATH: ${{ runner.temp }}/browser-tests/node_modules
         run: node .github/tests/render.cjs

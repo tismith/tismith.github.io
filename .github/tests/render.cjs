@@ -27,6 +27,40 @@ async function sitePages(directory = '_site') {
   return pages.sort();
 }
 
+async function checkKeyboard(page, path) {
+  // Start from the document, so the first Tab must expose the bypass link.
+  await page.keyboard.press('Tab');
+  const skip = page.locator('.skip-link');
+  assert.ok(await skip.evaluate(element => element === document.activeElement),
+    'Skip link must be first keyboard stop: ' + path);
+  assert.ok(await skip.evaluate(element => {
+    const rect = element.getBoundingClientRect();
+    const style = getComputedStyle(element);
+    return rect.top >= 0 && rect.bottom <= innerHeight &&
+      style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 3;
+  }), 'Skip link and its focus indicator must be visible: ' + path);
+  await page.keyboard.press('Enter');
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'main-content',
+    'Skip link must move focus into main content: ' + path);
+  await page.keyboard.press('Tab');
+  assert.ok(await page.evaluate(() => document.querySelector('main').contains(document.activeElement)),
+    'Tab after skipping must stay in content: ' + path);
+
+  // Walk the complete navigation using Tab, without focusing each link directly.
+  await skip.focus();
+  const navigation = await page.locator('.sidebar a').all();
+  assert.ok(navigation.length >= 3);
+  for (const link of navigation) {
+    await page.keyboard.press('Tab');
+    assert.ok(await link.evaluate(element => element === document.activeElement),
+      'Navigation must be reachable in DOM order: ' + await link.innerText());
+    assert.ok(await link.evaluate(element => {
+      const style = getComputedStyle(element);
+      return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 3;
+    }), 'Navigation must have visible keyboard focus');
+  }
+}
+
 async function main() {
   let browser;
   try {
@@ -45,6 +79,7 @@ async function main() {
     }
     assert.ok(pages.some(path => /^\/page\d+\/$/.test(path)), 'Pagination must be generated');
     const responses = new Map();
+    const failures = [];
     await mkdir('browser-test-results', { recursive: true });
     browser = await chromium.launch();
 
@@ -94,6 +129,26 @@ async function main() {
             );
             assert.deepEqual(insecure, [], 'Insecure resource URL on ' + path);
 
+            const viewportSettings = await page.locator('meta[name="viewport"]').getAttribute('content');
+            assert.doesNotMatch(viewportSettings, /maximum-scale|user-scalable\s*=\s*(no|0)/i,
+              'Page must allow zoom: ' + path);
+            await checkKeyboard(page, path);
+            await page.evaluate(() => document.activeElement.blur());
+            await page.evaluate(() => scrollTo(0, 0));
+            await page.addScriptTag({ path: require.resolve('axe-core/axe.min.js') });
+            const accessibility = await page.evaluate(async () => {
+              const result = await axe.run(document, {
+                runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] }
+              });
+              return result.violations.map(violation => ({
+                id: violation.id,
+                nodes: violation.nodes.map(node => ({
+                  target: node.target, summary: node.failureSummary
+                }))
+              }));
+            });
+            assert.deepEqual(accessibility, [], 'Accessibility violations: ' + name + ' ' + path);
+
             if (name === 'desktop') {
               const links = await page.locator('a[href], link[rel="alternate"][href], img[src]').evaluateAll(elements =>
                 elements.map(element => element.href || element.src)
@@ -121,6 +176,9 @@ async function main() {
             }
             assert.deepEqual(errors, [], 'Rendering errors on ' + path);
             console.log('Renders successfully: ' + name + ' ' + path);
+          } catch (error) {
+            failures.push({ viewport: name, path, message: error.message });
+            console.error(error);
           } finally {
             const label = path === '/' ? 'homepage' : path.replace(/^\//, '').replace(/[^a-zA-Z0-9_-]/g, '-');
             await page.screenshot({ path: 'browser-test-results/' + label + '-' + name + '.png', fullPage: true });
@@ -131,6 +189,7 @@ async function main() {
         await context.close();
       }
     }
+    assert.deepEqual(failures, [], 'Site checks must pass for every page and viewport');
     console.log('Checked ' + pages.length + ' pages on desktop/mobile and ' + responses.size + ' internal targets');
   } finally {
     if (browser) await browser.close();
