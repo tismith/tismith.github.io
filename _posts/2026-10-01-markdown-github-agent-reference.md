@@ -17,6 +17,43 @@ Markdown makes this easy to maintain. I can work with the files in Obsidian, a t
 
 Git adds a history of changes. If a note becomes inaccurate, I can correct it. If an agent makes an unhelpful edit, I can inspect the diff and revert it.
 
+## What the repository could look like
+
+There is no special schema required. A small archive could start with a directory listing like this:
+
+```text
+README.md
+index.md
+preferences/
+    communication.md
+    tools-and-workflows.md
+projects/
+    personal-blog/
+        overview.md
+        deployment.md
+        decisions.md
+    garden-planner/
+        overview.md
+        next-steps.md
+reference/
+    markdown-conventions.md
+    useful-links.md
+journal/
+    2026-10-01.md
+archive/
+    retired-project.md
+```
+
+This is an example structure, rather than a requirement to organise every vault the same way.
+
+The `README.md` explains what the repository is for and how to use it. The `index.md` links to the main topics, with a sentence describing each one. That gives an agent a useful starting point without needing to read every file.
+
+The project folders hold current context: what I am building, how it works, what we have decided, and what remains to do. Preferences hold reusable guidance, while reference notes capture material that applies across projects. Dated journal entries can record what happened in a session; anything that changes a project's current state should also be reflected in its project notes.
+
+For a question about the blog's deployment, the agent could follow `index.md` to `projects/personal-blog/overview.md`, then read `deployment.md` and the relevant decisions. After a change, it could update those notes and add a link from the index if it creates a new one.
+
+The folder structure helps navigation, but the notes still need to explain themselves. A short summary, a last-reviewed date, and links to related notes make it easier to judge whether a file is relevant and current.
+
 ## Giving the agent directions
 
 Putting notes in a repository is only half the setup. The agent also needs to know where to look and when to use them.
