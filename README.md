@@ -10,11 +10,11 @@ saved as the homepage-screenshots Actions artifact for seven days. External font
 analytics and Disqus requests are blocked to keep the test deterministic. It runs on pull
 requests to `master`, pushes to `master`, and manual workflow dispatches.
 
-CI temporarily uses Ruby 2.6 to match the legacy GitHub Pages 175 / Jekyll 3.6
-dependency stack. Ruby 2.6 is end of life; upgrade it together with the dependencies.
-In particular, Nokogiri 1.14 requires Ruby 2.7 or newer.
+CI uses Ruby 3.4 (from `.ruby-version`), GitHub Pages 232 / Jekyll 3.10,
+and the Bundler version recorded in `Gemfile.lock`. Keep the lockfile committed
+so local builds and CI install the same dependency versions.
 
-To run the same build locally with a compatible Ruby and Bundler:
+To run the same build locally with Ruby 3.4 and Bundler 2.4.22:
 
 ```sh
 bundle install
