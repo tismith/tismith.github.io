@@ -9,7 +9,7 @@ At the time of writing, I'm a thirty-something programmer living and working in 
 If you'd like to contact me, I'm available via twitter as [{{ site.author.twitter_handle}} ]({{ site.author.twitter }}) or via email at <a href="mailto:{{ site.author.email }}">{{site.author.email}}</a>. My PGP key is available at [tobysmith.asc](/tobysmith.asc).
 
 <center>
-<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.au/?ie=UTF8&amp;ll=-27.471534,153.024573&amp;spn=0.027796,0.038023&amp;t=m&amp;z=15&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com.au/?ie=UTF8&amp;ll=-27.471534,153.024573&amp;spn=0.027796,0.038023&amp;t=m&amp;z=15&amp;source=embed" style="color:#0000FF;text-align:left">View Larger Map</a></small>
+<iframe title="Map of Brisbane" width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.au/?ie=UTF8&amp;ll=-27.471534,153.024573&amp;spn=0.027796,0.038023&amp;t=m&amp;z=15&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com.au/?ie=UTF8&amp;ll=-27.471534,153.024573&amp;spn=0.027796,0.038023&amp;t=m&amp;z=15&amp;source=embed" style="color:#0000FF;text-align:left">View Larger Map</a></small>
 </center>
 
 This site was created using [Jekyll](https://jekyllrb.com) and [Hyde](http://hyde.getpoole.com). Its source is available on [GitHub]({{ site.github.repo }}), and GitHub Actions builds and tests it before publishing to GitHub Pages.
