@@ -21,3 +21,17 @@ bundle install
 JEKYLL_ENV=production bundle exec jekyll build --trace
 test -s _site/index.html
 ```
+
+## Publishing
+
+Set Settings > Pages > Build and deployment > Source to **GitHub Actions**.
+This replaces independent branch publishing with this workflow's deployment.
+
+After a successful build and browser test, CI packages the same `_site/` directory
+as a Pages artifact. The deployment job requires the build job to succeed and
+only runs on `master` pushes or manual runs on `master`. Pull requests run the
+tests and artifact packaging but never deploy. A failed build or rendering test
+leaves the previously deployed site in place.
+
+Keep the existing custom domain configured in Pages settings. Successful CI alone
+does not gate the old branch publisher: switching the Source setting is required.
