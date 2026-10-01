@@ -27,12 +27,10 @@ jobs:
         with:
           persist-credentials: false
 
-      # Temporary compatibility baseline for github-pages 175 / Jekyll 3.6.
-      # Upgrade Ruby together with the legacy dependencies.
       - name: Set up Ruby and install locked dependencies
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.6'
+          ruby-version: .ruby-version
           bundler-cache: true
 
       - name: Build site
