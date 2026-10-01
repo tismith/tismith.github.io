@@ -1,6 +1,7 @@
 ---
 layout: page
 title: About
+permalink: /about.html
 ---
 
 At the time of writing, I'm a thirty-something programmer living and working in Brisbane, Australia. Since 2004, I've been working in technology spaces focusing on embedded Linux systems.
