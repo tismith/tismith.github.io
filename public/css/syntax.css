@@ -39,7 +39,7 @@
 .nt { color: #2f6f9f; } /* Name.Tag */
 .nv { color: #003333 } /* Name.Variable */
 .ow { color: #000000; } /* Operator.Word */
-.w { color: #bbbbbb } /* Text.Whitespace */
+.w { color: #666 } /* Text.Whitespace */
 .mf { color: #a33d00 } /* Literal.Number.Float */
 .mh { color: #a33d00 } /* Literal.Number.Hex */
 .mi { color: #a33d00 } /* Literal.Number.Integer */
